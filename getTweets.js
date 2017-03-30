@@ -1,7 +1,6 @@
-var number = 1;
-var key = 1;
-
-//--------------------
+var number = 0;
+var key = 0;
+var tweetsArray = [];
 
 function incReadCounter() {
     var readCounterElem = document.getElementById("readCounter");
@@ -54,6 +53,15 @@ function createTweetElem(content) {
     var secondColElem = document.createElement("div");
     secondColElem.className = "col-xs-2 col-md-2";
 
+    var buttonElem = document.createElement("input");
+    buttonElem.type = "button";
+    buttonElem.value = "Read";
+    buttonElem.name = number++;
+    buttonElem.addEventListener("click", incReadCounter);
+    buttonElem.addEventListener("click", deleteReadTweet);
+    buttonElem.addEventListener("click", putInClientStorage);
+
+    secondColElem.appendChild(buttonElem);
 
     innerRowElem.appendChild(firstColElem);
     innerRowElem.appendChild(secondColElem);
@@ -71,7 +79,40 @@ function createTweetElem(content) {
     tweetsListDiv.appendChild(tweetElem);
 }
 
-for(var i = 0; i < localStorage.length; i++){
-    createTweetElem(localStorage[i]);
+function displayTweets() {
+    for (var i = 0; i < tweetsArray.length; i++) {
+        createTweetElem(tweetsArray[i]);
+    }
 }
+
+function getNewTweets() {
+    var cb = new Codebird;
+    cb.setConsumerKey("QZIkKMeTgJpuZLSsimOexemM8", "3SUFIytalLPqkwu9yDlmq39eWaVOWC4lNFeguzL4ShUu6WtleB");
+    cb.setToken("847033435046731778-WOazCo1yxIF7jHbanPgWdEEbSc6y00y", "LBOIsKmTMDdbEbFAPOB65Gpyh5vedeCbpNoMtEv4VTBku");
+
+     cb.__call(
+        "search_tweets",
+        "q=GurevichJuli",
+        function (response) {
+            var statuses = response.statuses;
+            for (var i = 0; i < statuses.length; i++){
+                var status = statuses[i];
+                var screen_name = status.user.screen_name;
+                var text = status.text;
+                tweetsArray.push(text);
+                console.log(screen_name + ": " + text);
+            }
+            displayTweets();
+        }, true);
+}
+
+function  getReadTweets() {
+    for(var i = 0; i < localStorage.length; i++){
+        createTweetElem(localStorage[i]);
+    }
+    localStorage.clear();
+}
+
+
+
 
