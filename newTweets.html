@@ -22,7 +22,7 @@
                 <h2>New tweets</h2>
             </div>
             <div class="col-xs-1 col-md-1">
-                <div id="readCounter">0</div>
+                <div id="readCounter"></div>
             </div>
         </div>
     </div>
@@ -39,7 +39,10 @@
     <div class="col-md-4"></div>
 </div>
 
-<script language="JavaScript">getNewTweets();</script>
+<script language="JavaScript">
+    getReadTweetsCount();
+    getNewTweets();
+    setInterval(getNewTweets, 6000);</script>
 </body>
 </html>
 

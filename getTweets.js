@@ -1,6 +1,29 @@
 var number = 0;
-var key = 0;
-var tweetsArray = [];
+var newTweetsArray = [];
+var readTweetsKey = "readTweets";
+var readTweetsInStorage = [];
+var readTweets = getTweetsFromStorage();
+if (readTweets != null){
+    readTweetsInStorage = readTweets;
+}
+var isDisplayed = false;
+
+var cb = new Codebird;
+cb.setConsumerKey("QZIkKMeTgJpuZLSsimOexemM8", "3SUFIytalLPqkwu9yDlmq39eWaVOWC4lNFeguzL4ShUu6WtleB");
+cb.setToken("847033435046731778-WOazCo1yxIF7jHbanPgWdEEbSc6y00y", "LBOIsKmTMDdbEbFAPOB65Gpyh5vedeCbpNoMtEv4VTBku");
+
+
+function getReadTweetsCount () {
+    var readCounterElem = document.getElementById("readCounter");
+    readCounterElem.textContent = readTweetsInStorage.length > 0 ? readTweetsInStorage.length : 0;
+}
+
+function getTweetsFromStorage () {
+    if (localStorage.getItem(readTweetsKey)!= null){
+        return JSON.parse(localStorage[readTweetsKey]);
+    }
+    return null;
+}
 
 function incReadCounter() {
     var readCounterElem = document.getElementById("readCounter");
@@ -16,10 +39,13 @@ function deleteReadTweet(event){
 
 function putInClientStorage(event) {
     var currentTarget = event.currentTarget;
-    localStorage.setItem(key++, currentTarget.parentNode.previousSibling.firstChild.textContent);
+    var readTweetText = currentTarget.parentNode.previousSibling.firstChild.textContent;
+    readTweetsInStorage.push(readTweetText);
+    newTweetsArray.splice(newTweetsArray.indexOf(readTweetText),1);
+    localStorage.setItem(readTweetsKey, JSON.stringify(readTweetsInStorage));
 }
 
-function createTweetElem(content) {
+function createTweetElem(content, isRead){
 
     var tweetsListDiv = document.querySelector("div.tweetsList");
 
@@ -53,15 +79,17 @@ function createTweetElem(content) {
     var secondColElem = document.createElement("div");
     secondColElem.className = "col-xs-2 col-md-2";
 
-    var buttonElem = document.createElement("input");
-    buttonElem.type = "button";
-    buttonElem.value = "Read";
-    buttonElem.name = number++;
-    buttonElem.addEventListener("click", incReadCounter);
-    buttonElem.addEventListener("click", deleteReadTweet);
-    buttonElem.addEventListener("click", putInClientStorage);
+    if(!isRead) {
+        var buttonElem = document.createElement("input");
+        buttonElem.type = "button";
+        buttonElem.value = "Read";
+        buttonElem.name = number++;
+        buttonElem.addEventListener("click", incReadCounter);
+        buttonElem.addEventListener("click", deleteReadTweet);
+        buttonElem.addEventListener("click", putInClientStorage);
 
-    secondColElem.appendChild(buttonElem);
+        secondColElem.appendChild(buttonElem);
+    }
 
     innerRowElem.appendChild(firstColElem);
     innerRowElem.appendChild(secondColElem);
@@ -79,17 +107,43 @@ function createTweetElem(content) {
     tweetsListDiv.appendChild(tweetElem);
 }
 
-function displayTweets() {
-    for (var i = 0; i < tweetsArray.length; i++) {
-        createTweetElem(tweetsArray[i]);
+function displayTweets(newTweetsArray) {
+    if (!isDisplayed) {
+        for (var i = 0; i < newTweetsArray.length; i++) {
+            createTweetElem(newTweetsArray[i], false);
+        }
+        isDisplayed = true;
+    }
+}
+
+function isNewTweet(content) {
+    if (newTweetsArray.length > 0) {
+        if (readTweetsInStorage.length > 0) {
+            if ((readTweetsInStorage.indexOf(content) == -1) && (newTweetsArray.indexOf(content) == -1)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else {
+            if (newTweetsArray.indexOf(content) == -1){
+                return true;
+            }
+        }
+    }
+    else{
+        if (readTweetsInStorage.length > 0) {
+            if (readTweetsInStorage.indexOf(content) == -1) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 }
 
 function getNewTweets() {
-    var cb = new Codebird;
-    cb.setConsumerKey("QZIkKMeTgJpuZLSsimOexemM8", "3SUFIytalLPqkwu9yDlmq39eWaVOWC4lNFeguzL4ShUu6WtleB");
-    cb.setToken("847033435046731778-WOazCo1yxIF7jHbanPgWdEEbSc6y00y", "LBOIsKmTMDdbEbFAPOB65Gpyh5vedeCbpNoMtEv4VTBku");
-
      cb.__call(
         "search_tweets",
         "q=GurevichJuli",
@@ -98,19 +152,22 @@ function getNewTweets() {
             for (var i = 0; i < statuses.length; i++){
                 var status = statuses[i];
                 var screen_name = status.user.screen_name;
-                var text = status.text;
-                tweetsArray.push(text);
-                console.log(screen_name + ": " + text);
+                var content = status.text;
+                if (isNewTweet(content)){
+                    newTweetsArray.push(content);
+                    isDisplayed = false;
+                }
+                console.log(screen_name + ": " + content);
             }
-            displayTweets();
+            displayTweets(newTweetsArray);
         }, true);
 }
 
 function  getReadTweets() {
-    for(var i = 0; i < localStorage.length; i++){
-        createTweetElem(localStorage[i]);
+    for(var i = 0; i < readTweetsInStorage.length; i++){
+        console.log(readTweetsInStorage[i]);
+        createTweetElem(readTweetsInStorage[i], true);
     }
-    localStorage.clear();
 }
 
 
