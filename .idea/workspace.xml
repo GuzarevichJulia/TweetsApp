@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69fe5508-3611-4094-9a2e-5c75c7155364" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/codebird.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/getTweets.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Scripts/codebird.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Scripts/getTweets.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Scripts/newTweets.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Scripts/tweetsList.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/newTweets.html" afterPath="$PROJECT_DIR$/newTweets.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tweetsList.html" afterPath="$PROJECT_DIR$/tweetsList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style/style.css" afterPath="$PROJECT_DIR$/style/style.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -290,18 +291,25 @@
       <option name="presentableId" value="Default" />
       <updated>1490942341646</updated>
       <workItem from="1490942342985" duration="13743000" />
-      <workItem from="1491211652994" duration="8991000" />
+      <workItem from="1491211652994" duration="9144000" />
     </task>
+    <task id="LOCAL-00001" summary="Fixed some error">
+      <created>1491222528015</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1491222528015</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22734000" />
+    <option name="totallyTimeSpent" value="22887000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="46" y="25" width="974" height="996" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16701461" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16701461" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32844242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -342,6 +350,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed some error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed some error" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
